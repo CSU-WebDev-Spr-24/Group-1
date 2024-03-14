@@ -1,10 +1,9 @@
 import {useStore} from "../resources/store"
-import {useEffect} from "react";
 import Search from "./Search";
 
 const Hero = () => {
     // zustand store
-    const loggedIn = useStore((state) => state.loggedIn)
+    const loggedIn = useStore((state) => state.loggedIn);
 
     return !loggedIn ? (
         <div className="relative isolate overflow-hidden bg-amber-50">
