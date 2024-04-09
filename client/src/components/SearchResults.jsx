@@ -4,7 +4,6 @@ import {
 } from '@heroicons/react/20/solid'
 import {useEffect, useState} from "react";
 import {useNavigate, useSearchParams} from "react-router-dom";
-import Loading from "./Loading";
 
 const filters = [
     {
@@ -38,14 +37,7 @@ const SearchResults = () => {
         navigate(`/results?${searchParams.toString()}`);
     };
 
-    const handleLocation = (location) => {
-        sessionStorage.setItem('currentLocationInfo', JSON.stringify(location));
-        console.log('locationId:', location.location_id);
-        navigate(`/location/${location.location_id}`);
-    };
-
     useEffect(() => {
-        setIsLoading(true);
         const getSearchResults = async () => {
             try {
                 const response = await useStore.getState().search(searchQuery, category);
@@ -75,20 +67,16 @@ const SearchResults = () => {
                     </button>
                 ))}
             </div>
-            {isLoading && <Loading/>}
+            {isLoading && <p>Loading...</p>}
             {searchResults.length > 0 ? (
                 <div className="flex flex-wrap gap-3.5 justify-center py-8">
                     {searchResults.map((result, index) => (
                         <div key={result.location_id}
                              className="bg-amber-100 p-10 hover:scale-110 text-gray-800 max-w-lg transition ease-in-out hover:cursor-pointer rounded-md">
-                            {/* TODO: make this a Link? and pass the location_id as a param so that we can use it to write a journal entry on the location */}
-                            <button onClick={() => handleLocation(result)}>
-                                <h4 className="text-xl font-bold tracking-tight border-b border-amber-500 mb-3">{result.name}</h4>
-                                <p className="max-w-52 tracking-tight">{result.address_obj?.address_string}</p>
-                            </button>
-
-                        </div>
-                    ))}
+                            <h4 className="text-xl font-bold tracking-tight border-b border-amber-500 mb-3">{result.name}</h4>
+                        <p className="max-w-52 tracking-tight">{result.address_obj?.address_string}</p>
+                    </div>
+                ))}
                 </div>
             ) : (
                 <p>No results found.</p>

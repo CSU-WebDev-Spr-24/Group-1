@@ -14,9 +14,6 @@ const authenticateToken = (req, res, next) => {
             req.user = verified; // Add user info to request
             next(); // Proceed to the next middleware or route handler, in this case the route handler bc no other middleware
         } catch (error) {
-            if (error.name === 'TokenExpiredError') {
-                return res.status(403).json({ message: 'Session has expired. Please log in again.' });
-            }
             console.error('JWT verification error:', error);
             res.status(403).json({ message: 'Invalid token' });
         }
@@ -25,4 +22,12 @@ const authenticateToken = (req, res, next) => {
     }
 };
 
-module.exports = authenticateToken;
+function validateObjectId(req, res, next) {
+    const { id } = req.params;
+    if (!id || id.length !== 24) {
+        return res.status(404).json({ message: 'Invalid ID format' });
+    }
+    next();
+}
+
+module.exports = { authenticateToken, validateObjectId };
