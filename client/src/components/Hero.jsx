@@ -3,6 +3,7 @@ import Search from "./Search";
 import {useState} from "react";
 import Modal from "./Modal";
 
+
 const Hero = () => {
     // zustand store
     const loggedIn = useStore((state) => state.loggedIn);
