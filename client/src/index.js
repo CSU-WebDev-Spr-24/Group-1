@@ -14,6 +14,7 @@ import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 const router = createBrowserRouter([
@@ -30,9 +31,6 @@ const router = createBrowserRouter([
             },
             {
                 path: "/profile", element: < UserProfile />
-            },
-            {
-                path: "/add-entry", element: <AddEntry />
             },
             {
                 path: "/add-entry/:locationName/:locationId", element: <AddEntry />
